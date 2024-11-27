@@ -3,7 +3,7 @@ defmodule SlaxWeb.ChatRoomLive do
 
   def render(assigns) do
     ~H"""
-    <div>Welcome to the chat room!</div>
+    <div>Welcome to the chat!</div>
     """
   end
 end
