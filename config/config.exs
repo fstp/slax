@@ -55,8 +55,15 @@ config :tailwind,
 
 # Configures Elixir's Logger
 config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  format: "[$date $time] $metadata[$level] $message\n",
+  metadata: [:request_id],
+  colors: [
+    enabled: true,
+    debug: :light_cyan,
+    info: :light_green,
+    warn: :light_yellow,
+    error: :light_red,
+  ]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

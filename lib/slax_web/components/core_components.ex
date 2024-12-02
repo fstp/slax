@@ -17,7 +17,7 @@ defmodule SlaxWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import SlaxWeb.Gettext
+  use Gettext, backend: SlaxWeb.Gettext
 
   @doc """
   Renders a modal.

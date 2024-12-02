@@ -1,10 +1,12 @@
 defmodule SlaxWeb.ChatRoomLive do
+  require Logger
   use SlaxWeb, :live_view
 
   alias Slax.Repo
   alias Slax.Chat.Room
 
   def render(assigns) do
+    Logger.debug("rendering")
     ~H"""
     <div class="flex flex-col flex-grow shadow-lg">
       <%= if @room do %>
@@ -22,6 +24,7 @@ defmodule SlaxWeb.ChatRoomLive do
   end
 
   def mount(_params, _session, socket) do
+    Logger.debug("mounting")
     room = Room |> Repo.all() |> List.first()
     {:ok, assign(socket, room: room)}
   end
