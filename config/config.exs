@@ -56,7 +56,7 @@ config :tailwind,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "[$date $time] $metadata[$level] $message\n",
-  metadata: [:request_id],
+  metadata: [:request_id, :module, :line],
   colors: [
     enabled: true,
     debug: :light_cyan,
