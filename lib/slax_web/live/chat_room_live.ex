@@ -46,38 +46,42 @@ defmodule SlaxWeb.ChatRoomLive do
   attr :room, Room, required: true
   defp room_link(assigns) do
     ~H"""
-    <a
+    <.link
       class={[
         "flex items-center h-8 text-sm pl-8 pr-3",
         (@active && "bg-slate-300") || "hover:bg-slate-300",
       ]}
-      href={~p"/rooms/#{@room}"}
+      patch={~p"/rooms/#{@room}"}
     >
       <.icon name="hero-hashtag" class="h-4 w-4"/>
       <span class={["ml-2 leading-none", @active && "font-bold"]}>
         <%= @room.name %>
       </span>
-    </a>
+    </.link>
     """
   end
 
-  def mount(params, _session, socket) do
-    # Logger.debug("mounting")
+  def mount(_params, _session, socket) do
+    # Logger.debug("mount: #{inspect(params)} (connected: #{connected?(socket)})")
     rooms = Repo.all(Room)
 
-    room = case Map.fetch(params, "id") do
-      {:ok, id} ->
-        Repo.get!(Room, id)
-
-      :error ->
-        List.first(rooms)
-    end
-
-    {:ok, assign(socket, room: room, hide_topic?: false, rooms: rooms)}
+    {:ok, assign(socket, rooms: rooms)}
   end
 
   def handle_event("toggle-topic", _params, socket) do
     # Logger.debug("toggling topic")
     {:noreply, update(socket, :hide_topic?, &(!&1))}
+  end
+
+  def handle_params(params, _session, socket) do
+    # Logger.debug("handle_params: #{inspect(params)} (connected: #{connected?(socket)})")
+    room = case Map.fetch(params, "id") do
+      {:ok, id} ->
+        Repo.get!(Room, id)
+
+      :error ->
+        List.first(socket.assigns.rooms)
+    end
+    {:noreply, assign(socket, hide_topic?: false, room: room)}
   end
 end
