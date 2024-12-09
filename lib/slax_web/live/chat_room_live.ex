@@ -2,7 +2,7 @@ defmodule SlaxWeb.ChatRoomLive do
   require Logger
   use SlaxWeb, :live_view
 
-  alias Slax.Repo
+  alias Slax.Chat
   alias Slax.Chat.Room
 
   def render(assigns) do
@@ -63,7 +63,7 @@ defmodule SlaxWeb.ChatRoomLive do
 
   def mount(_params, _session, socket) do
     # Logger.debug("mount: #{inspect(params)} (connected: #{connected?(socket)})")
-    rooms = Repo.all(Room)
+    rooms = Chat.list_rooms()
 
     {:ok, assign(socket, rooms: rooms)}
   end
@@ -77,11 +77,11 @@ defmodule SlaxWeb.ChatRoomLive do
     # Logger.debug("handle_params: #{inspect(params)} (connected: #{connected?(socket)})")
     room = case Map.fetch(params, "id") do
       {:ok, id} ->
-        Repo.get!(Room, id)
+        Chat.get_room!(id)
 
       :error ->
-        List.first(socket.assigns.rooms)
+        Chat.get_first_room!()
     end
-    {:noreply, assign(socket, hide_topic?: false, room: room)}
+    {:noreply, assign(socket, hide_topic?: false, room: room, page_title: "#" <> room.name)}
   end
 end
