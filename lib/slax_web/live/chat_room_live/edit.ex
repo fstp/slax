@@ -1,4 +1,5 @@
 defmodule SlaxWeb.ChatRoomLive.Edit do
+  require Logger
   use SlaxWeb, :live_view
 
   alias Slax.Chat
@@ -17,7 +18,7 @@ defmodule SlaxWeb.ChatRoomLive.Edit do
           </.link>
         </:actions>
       </.header>
-      <.simple_form for={@form} id="room-form">
+      <.simple_form for={@form} id="room-form" phx-change="validate-room" phx-submit="save-room">
         <.input field={@form[:name]} type="text" label="Name"/>
         <.input field={@form[:topic]} type="text" label="Topic"/>
         <:actions>
@@ -38,6 +39,29 @@ defmodule SlaxWeb.ChatRoomLive.Edit do
       |> assign_form(changeset)
 
     {:ok, socket}
+  end
+
+  def handle_event("validate-room", %{"room" => room_params}, socket) do
+    changeset =
+      socket.assigns.room
+      |> Chat.change_room(room_params)
+      |> Map.put(:action, :validate)
+
+    # Logger.info("Validating room: #{inspect(changeset)}")
+    {:noreply, assign_form(socket, changeset)}
+  end
+
+  def handle_event("save-room", %{"room" => room_params}, socket) do
+    case Chat.update_room(socket.assigns.room, room_params) do
+      {:ok, room} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Room updated successfully")
+         |> push_navigate(to: ~p"/rooms/#{room}")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
