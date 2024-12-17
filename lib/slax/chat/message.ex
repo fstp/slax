@@ -19,5 +19,6 @@ defmodule Slax.Chat.Message do
     message
     |> cast(attrs, [:body])
     |> validate_required([:body])
+    |> update_change(:body, &String.trim/1)
   end
 end

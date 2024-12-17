@@ -154,7 +154,13 @@ defmodule SlaxWeb.ChatRoomLive do
           <.link class="text-sm font-semibold hover:underline">
             <span><%= username(@message.user) %></span>
           </.link>
-          <p class="text-sm"><%= @message.body %></p>
+          <p class="text-sm">
+            <%= @message.body
+            |> Phoenix.HTML.html_escape()
+            |> Phoenix.HTML.safe_to_string()
+            |> String.replace("\n", "<br>")
+            |> raw() %>
+          </p>
         </div>
       </div>
     </div>
