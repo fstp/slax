@@ -22,8 +22,10 @@ import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import RoomMessages from "./hooks/RoomMessages"
+import ChatMessageTextArea from "./hooks/ChatMessageTextArea"
 
 const hooks = {
+  ChatMessageTextArea,
   RoomMessages,
 }
 

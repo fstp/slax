@@ -116,16 +116,15 @@ defmodule SlaxWeb.ChatRoomLive do
           class="flex items-center border-2 border-slate-300 rounded-sm p-1"
         >
           <textarea
-            class="flex-grow text-sm px-3 border-l border-slate-300 mx-1 resize-none truncate"
-            cols="1"
+            class="grow text-sm px-3 border-l border-slate-300 mx-1 resize-none text-clip"
+            cols=""
             id="chat-message-textarea"
             name={@new_message_form[:body].name}
             placeholder={"Message ##{@room.name}"}
             phx-debounce
+            phx-hook="ChatMessageTextArea"
             rows="1"
-          >
-      <%= Phoenix.HTML.Form.normalize_value("textarea", @new_message_form[:body].value) %>
-      </textarea>
+          ><%=Phoenix.HTML.Form.normalize_value("textarea", @new_message_form[:body].value)%></textarea>
           <button class="flex-shrink flex items-center justify-center h-6 w-6 rounded hover:bg-slate-200">
             <.icon name="hero-paper-airplane" class="h-4 w-4" />
           </button>
@@ -227,10 +226,12 @@ defmodule SlaxWeb.ChatRoomLive do
     socket =
       case Chat.create_message(room, message_params, current_user) do
         {:ok, _message} ->
-          assign_message_form(socket, Chat.change_message(%Message{}))
+          socket
+          |> assign_message_form(Chat.change_message(%Message{}))
 
         {:error, changeset} ->
-          assign_message_form(socket, changeset)
+          socket
+          |> assign_message_form(changeset)
       end
 
     {:noreply, socket}
