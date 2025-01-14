@@ -3,6 +3,7 @@ defmodule SlaxWeb.ChatRoomLive do
   alias Expo.Message
   use SlaxWeb, :live_view
 
+  alias Slax.Accounts
   alias Slax.Accounts.User
   alias Slax.Chat
   alias Slax.Chat.{Message, Room}
@@ -25,6 +26,16 @@ defmodule SlaxWeb.ChatRoomLive do
         </div>
         <div id="rooms-list">
           <.room_link :for={room <- @rooms} room={room} active={room.id == @room.id} />
+        </div>
+        <div class="mt-4">
+          <div class="flex items-center h-8 px-3">
+            <div class="flex items-center grow">
+              <span class="ml-2 leading-none font-medium text-sm">Users</span>
+            </div>
+          </div>
+          <div id="users-list">
+            <.user :for={user <- @users} user={user} />
+          </div>
         </div>
       </div>
     </div>
@@ -134,6 +145,24 @@ defmodule SlaxWeb.ChatRoomLive do
     """
   end
 
+  attr :user, User, required: true
+  attr :online, :boolean, default: false
+
+  defp user(assigns) do
+    ~H"""
+    <.link class="flex items-center h-8 hover:bg-gray-300 text-sm pl-8 pr-3" href="#">
+      <div class="flex justify-center w-4">
+        <%= if @online do %>
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+        <% else %>
+          <span class="w-2 h-2 rounded-full border-2 border-gray-500"></span>
+        <% end %>
+      </div>
+      <span class="ml-2 leading-none"><%= username(@user) %></span>
+    </.link>
+    """
+  end
+
   attr :active, :boolean, required: true
   attr :room, Room, required: true
 
@@ -205,10 +234,12 @@ defmodule SlaxWeb.ChatRoomLive do
 
   def mount(_params, _session, socket) do
     rooms = Chat.list_rooms()
-
+    users = Accounts.list_users()
     timezone = get_connect_params(socket)["timezone"]
 
-    {:ok, assign(socket, rooms: rooms, timezone: timezone)}
+    {:ok,
+     socket
+     |> assign(rooms: rooms, timezone: timezone, users: users)}
   end
 
   def handle_event("toggle-topic", _params, socket) do
