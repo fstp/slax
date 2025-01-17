@@ -7,6 +7,7 @@ defmodule Slax.Chat.Message do
 
   schema "messages" do
     field :body, :string
+    field :animate, :boolean, virtual: true
 
     belongs_to :room, Room
     belongs_to :user, User

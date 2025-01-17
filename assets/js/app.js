@@ -23,10 +23,12 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import RoomMessages from "./hooks/RoomMessages"
 import ChatMessageTextArea from "./hooks/ChatMessageTextArea"
+import OnRemoveMessage from "./hooks/OnRemoveMessage"
 
 const hooks = {
   ChatMessageTextArea,
   RoomMessages,
+  OnRemoveMessage,
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")

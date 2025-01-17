@@ -110,7 +110,7 @@ defmodule SlaxWeb.ChatRoomLive do
       </div>
       <div
         id="room-messages"
-        class="flex flex-col flex-grow overflow-auto"
+        class="flex flex-col overflow-auto"
         phx-hook="RoomMessages"
         phx-update="stream"
       >
@@ -121,6 +121,17 @@ defmodule SlaxWeb.ChatRoomLive do
           message={message}
           timezone={@timezone}
         />
+      </div>
+      <div class="flex-grow">
+        <div class="flex justify-left pl-6 py-6 space-x-4">
+          <div class="animate-fadeIn text-center bg-gray-200 rounded-lg shadow-md py-1 px-4 text-sm">
+            <span class="font-bold">Gandalf</span>
+            is typing
+            <span class="relative w-[max-content] text-sm before:absolute before:inset-0 before:bg-gray-200 before:animate-typewriter">
+              . . . .
+            </span>
+          </div>
+        </div>
       </div>
       <div class="h-12 bg-white px-4 pb-4">
         <.form
@@ -194,7 +205,11 @@ defmodule SlaxWeb.ChatRoomLive do
 
   defp message(assigns) do
     ~H"""
-    <div id={@dom_id} class="group relative flex px-4 py-3">
+    <div
+      id={@dom_id}
+      class={"group relative flex px-4 py-3" <> if @message.animate, do: " animate-popIn", else: ""}
+      phx-hook="OnRemoveMessage"
+    >
       <button
         :if={@current_user.id == @message.user_id}
         class="absolute top-4 right-4 text-red-500 hover:text-red-800 cursor-pointer hidden group-hover:block"
@@ -319,18 +334,26 @@ defmodule SlaxWeb.ChatRoomLive do
   def handle_info({:new_message, message}, socket) do
     socket =
       socket
-      |> stream_insert(:messages, message)
+      |> stream_insert(:messages, %{message | animate: true})
       |> push_event("scroll_messages_to_bottom", %{})
 
     {:noreply, socket}
   end
 
   def handle_info({:message_deleted, message}, socket) do
-    {:noreply, stream_delete(socket, :messages, message)}
+    {:noreply,
+     socket
+     |> push_event("fade_it", %{"id" => message.id})}
   end
 
   def handle_info(%{event: "presence_diff", payload: diff}, socket) do
     online_users = OnlineUsers.update(socket.assigns.online_users, diff)
+
+    new_map =
+      online_users
+      |> Enum.map(fn {key, value} -> {username(Accounts.get_user!(key)), value} end)
+
+    Logger.debug("new_map: #{inspect(new_map)}")
     {:noreply, assign(socket, online_users: online_users)}
   end
 end
