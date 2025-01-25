@@ -68,6 +68,20 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :opentelemetry,
+  span_processor: :batch,
+  traces_exporter: :otlp
+
+config :opentelemetry_exporter,
+  otlp_protocol: :http_protobuf,
+  otlp_endpoint: "http://localhost:4318" # Jaeger OTLP endpoint
+
+config :opentelemetry_phoenix,
+  tracer: :otel_tracer_default
+
+config :opentelemetry_ecto,
+  tracer: :otel_tracer_default
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
