@@ -12,7 +12,7 @@ services:
 
   db:
     image: postgres
-    restart: always
+    # restart: always
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     # or set shared memory limit when deploy via swarm stack
@@ -30,6 +30,6 @@ services:
 
   adminer:
     image: adminer
-    restart: always
+    # restart: always
     ports:
       - 8081:8080
