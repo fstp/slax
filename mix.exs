@@ -63,10 +63,14 @@ defmodule Slax.MixProject do
       {:timex, "~> 3.7"},
       {:ecto_psql_extras, "~> 0.8"},
       {:opentelemetry, "~> 1.5"},
-      {:opentelemetry_exporter, "~> 1.8"}, # For exporting traces
-      {:opentelemetry_phoenix, "~> 2.0"}, # Phoenix instrumentation
-      {:opentelemetry_ecto, "~> 1.2"}, # Ecto instrumentation (if using Ecto)
-      {:opentelemetry_bandit, "~> 0.2"} # Bandit adapter for the Phoenix instrumentation
+      # For exporting traces
+      {:opentelemetry_exporter, "~> 1.8"},
+      # Phoenix instrumentation
+      {:opentelemetry_phoenix, "~> 2.0"},
+      # Ecto instrumentation (if using Ecto)
+      {:opentelemetry_ecto, "~> 1.2"},
+      # Bandit adapter for the Phoenix instrumentation
+      {:opentelemetry_bandit, "~> 0.2"}
     ]
   end
 

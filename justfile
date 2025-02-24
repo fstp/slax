@@ -1,5 +1,9 @@
+alias d := docker
 alias s := start_server
 alias tw := tailwind_rebuild
+
+docker:
+    cd docker && docker compose up -d
 
 start_server:
     iex -S mix phx.server
