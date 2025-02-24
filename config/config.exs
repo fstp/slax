@@ -62,7 +62,7 @@ config :logger, :console,
     debug: :light_cyan,
     info: :light_green,
     warn: :light_yellow,
-    error: :light_red,
+    error: :light_red
   ]
 
 # Use Jason for JSON parsing in Phoenix
@@ -74,7 +74,8 @@ config :opentelemetry,
 
 config :opentelemetry_exporter,
   otlp_protocol: :http_protobuf,
-  otlp_endpoint: "http://localhost:4318" # Jaeger OTLP endpoint
+  # Jaeger OTLP endpoint
+  otlp_endpoint: "http://localhost:4318"
 
 config :opentelemetry_phoenix,
   tracer: :otel_tracer_default

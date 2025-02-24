@@ -20,8 +20,8 @@ module.exports = {
     animation: {
       typewriter: "typewriter 3s steps(11) infinite forwards",
       fadeIn: "fadeIn 2s cubic-bezier(0.4, 0, 0.6, 1)",
-      fadeOut: "fadeOut 2s cubic-bezier(0.4, 0, 0.6, 1)",
-      popIn: "popIn 0.5s cubic-bezier(0.4, 0, 0.6, 1)"
+      fadeOut: "fadeOut 1s cubic-bezier(0.4, 0, 0.6, 1)",
+      popIn: "popIn 0.3s cubic-bezier(0.4, 0, 0.6, 1)"
     },
     keyframes: {
       typewriter: {

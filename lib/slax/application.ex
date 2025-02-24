@@ -22,7 +22,7 @@ defmodule Slax.Application do
       # {Slax.Worker, arg},
       # Start to serve requests, typically the last entry
       SlaxWeb.Presence,
-      SlaxWeb.Endpoint,
+      SlaxWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
