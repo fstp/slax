@@ -1,6 +1,6 @@
 defmodule Slax.Chat do
   alias Slax.Accounts.User
-  alias Slax.Chat.{Message, Room}
+  alias Slax.Chat.{Message, Room, RoomMembership}
   alias Slax.Repo
 
   import Ecto.Query
@@ -70,6 +70,10 @@ defmodule Slax.Chat do
 
   def unsubscribe_from_room(room) do
     Phoenix.PubSub.unsubscribe(@pubsub, topic(room.id))
+  end
+
+  def join_room!(room, user) do
+    Repo.insert!(%RoomMembership{room: room, user: user})
   end
 
   defp topic(room_id) do
