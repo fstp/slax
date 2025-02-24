@@ -7,7 +7,7 @@ defmodule SlaxWeb.ChatRoomLive.Index do
     ~H"""
     <main class="flex-1 p-6 max-w-4xl mx-auto">
       <div class="mb-4">
-        <h1 class="text-xl font-semibold"><%= @page_title %></h1>
+        <h1 class="text-xl font-semibold">{@page_title}</h1>
       </div>
       <div class="bg-slate-50 border rounded">
         <div id="rooms" class="divide-y" phx-update="stream">
@@ -19,14 +19,14 @@ defmodule SlaxWeb.ChatRoomLive.Index do
           >
             <div>
               <div class="font-medium mb-1">
-                #<%= room.name %>
+                #{room.name}
                 <span class="mx-1 text-gray-500 font-light text-sm hidden group-hover:inline group-focus:inline">
                   View room
                 </span>
               </div>
               <div class="text-gray-500 text-sm">
                 <%= if room.topic do %>
-                  <%= room.topic %>
+                  {room.topic}
                 <% end %>
               </div>
             </div>
