@@ -10,7 +10,6 @@ defmodule SlaxWeb.ChatRoomLive do
   alias SlaxWeb.OnlineUsers
 
   def render(assigns) do
-    # Logger.debug("rendering")
     ~H"""
     <div class="flex flex-col flex-shrink-0 w-64 bg-slate-100 hover:resize-x overflow-hidden">
       <div class="flex justify-between items-center flex-shrink-0 h-16 border-b border-slate-300 px-4">
@@ -409,7 +408,6 @@ defmodule SlaxWeb.ChatRoomLive do
       online_users
       |> Enum.map(fn {key, value} -> {username(Accounts.get_user!(key)), value} end)
 
-    Logger.debug("new_map: #{inspect(new_map)}")
     {:noreply, assign(socket, online_users: online_users)}
   end
 end
