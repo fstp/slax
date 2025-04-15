@@ -403,11 +403,6 @@ defmodule SlaxWeb.ChatRoomLive do
 
   def handle_info(%{event: "presence_diff", payload: diff}, socket) do
     online_users = OnlineUsers.update(socket.assigns.online_users, diff)
-
-    new_map =
-      online_users
-      |> Enum.map(fn {key, value} -> {username(Accounts.get_user!(key)), value} end)
-
     {:noreply, assign(socket, online_users: online_users)}
   end
 end
