@@ -9,7 +9,8 @@ defmodule Slax.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -32,16 +33,18 @@ defmodule Slax.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 3.0"},
-      {:phoenix, "~> 1.7.14"},
-      {:phoenix_ecto, "~> 4.5"},
+      {:phoenix, "~> 1.8.0-rc.0", override: true},
+      {:phoenix_html, ">= 0.0.0"},
+      {:phoenix_ecto, "~> 4.6"},
+      {:phoenix_live_reload, ">= 0.0.0", only: :dev},
+      {:phoenix_live_view, "~> 1.0.0"},
+      {:phoenix_live_dashboard, ">= 0.0.0"},
+
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 4.2"},
-      {:phoenix_live_reload, "~> 1.5", only: :dev},
-      {:phoenix_live_view, "~> 1.0.4", override: true},
+      # {:phoenix_view, ">= 0.0.0"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8"},
       {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
