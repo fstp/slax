@@ -3,7 +3,7 @@ alias s := start_server
 alias tw := tailwind_rebuild
 
 docker:
-    cd docker && docker compose up -d
+    cd docker && docker compose up -d --remove-orphans
 
 start_server:
     iex -S mix phx.server

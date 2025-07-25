@@ -19,9 +19,9 @@ module.exports = {
     },
     animation: {
       typewriter: "typewriter 3s steps(11) infinite forwards",
-      fadeIn: "fadeIn 2s cubic-bezier(0.4, 0, 0.6, 1)",
-      fadeOut: "fadeOut 1s cubic-bezier(0.4, 0, 0.6, 1)",
-      popIn: "popIn 0.3s cubic-bezier(0.4, 0, 0.6, 1)"
+      fadeIn: "fadeIn 1s cubic-bezier(0.4, 0, 0.6, 1)",
+      fadeOut: "fadeOut 0.5s cubic-bezier(0.4, 0, 0.6, 1)",
+      popIn: "popIn 0.5s cubic-bezier(0.4, 0, 0.6, 1)"
     },
     keyframes: {
       typewriter: {
@@ -44,9 +44,9 @@ module.exports = {
         "0%": {
           opacity: 1
         },
-        "50%": {
-          opacity: 0.3
-        },
+        // "50%": {
+        //   opacity: 0.3
+        // },
         "100%": {
           opacity: 0
         }
