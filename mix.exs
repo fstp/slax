@@ -40,6 +40,9 @@ defmodule Slax.MixProject do
       {:phoenix_live_view, "~> 1.0.0"},
       {:phoenix_live_dashboard, ">= 0.0.0"},
 
+      {:unicode_util_compat, "~> 0.7", override: true},
+      {:mimerl, "~> 1.3", override: true},
+      {:certifi, "~> 2.12", override: true},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       # {:phoenix_view, ">= 0.0.0"},
@@ -61,6 +64,7 @@ defmodule Slax.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
+      {:plug, "~> 1.18", override: true},
       {:bandit, "~> 1.6"},
       {:timex, "~> 3.7"},
       {:ecto_psql_extras, "~> 0.8"},
